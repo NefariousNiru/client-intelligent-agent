@@ -36,11 +36,20 @@ canvas {
   color: #4A6583;
   z-index: 2; /* Ensures text is on top */
   text-align: center;
-  width: 60%;
+  width: 80%;
   position: absolute;
   top: 50%;
   transform: translateY(-50%);
   padding: 20px;
+}
+
+/* Copyright Text Styling */
+.copyright-text {
+  font-size: 14px;
+  color: #6c757d; /* Subtle gray */
+  text-align: center;
+  padding-top: 20px;
+  opacity: 0.8;
 }
 
 /* Right Side: Glassmorphic Elegant Login */

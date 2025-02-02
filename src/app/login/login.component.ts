@@ -31,14 +31,16 @@ export class LoginComponent implements AfterViewInit {
   private initTypingAnimation() {
     new Typed("#typed-output", {
       strings: [
-        "🥇 Seamless Teams collaboration!",
-        "📅 Effortless meeting scheduling.",
-        "✅ Smart task planning with Planner.",
-        "⏳ OneDrive keeps everything synced.",
-        "🚀 SharePoint for easy document access."
+        "Sync meetings, tasks, and files across Microsoft 365.",
+        "Get AI-powered insights for next steps in projects.",
+        "Identify key stakeholders &amp; track project memebers.",
+        "Classify projects using Teams transcripts & emails.",
+        "Manage context across Teams, Outlook &amp; Planner.",
+        "Access, edit &amp; collaborate on files with SharePoint.",
+        "Plan &amp; automate meetings seamlessly with Planner."
       ],
-      typeSpeed: 50,
-      backSpeed: 25,
+      typeSpeed: 40,
+      backSpeed: 20,
       backDelay: 2000,
       loop: true
     });
