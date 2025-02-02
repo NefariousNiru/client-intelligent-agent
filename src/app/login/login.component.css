@@ -1,0 +1,59 @@
+/* Fullscreen Animated Background */
+.login-container {
+  position: relative;
+  height: 100vh;
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background: linear-gradient(to right, #f4f7f9, #d9e2ec);
+  overflow: hidden;
+}
+
+/* Animated Background */
+canvas {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  z-index: 0;
+}
+
+/* Glassmorphic Login Card */
+.login-card {
+  position: relative;
+  z-index: 1;
+  background: rgba(94, 94, 94, 0.205);
+  border-radius: 15px;
+  backdrop-filter: blur(12px);
+  padding: 40px;
+  width: 400px;
+  text-align: center;
+  box-shadow: 0 6px 20px rgba(0, 0, 0, 0.15);
+  color: #2c3e50;
+}
+
+/* Microsoft Logo */
+.logo {
+  width: 100px;
+  margin-bottom: 10px;
+}
+
+/* Professional Login Button */
+.btn-login {
+  width: 100%;
+  padding: 12px;
+  font-size: 16px;
+  font-weight: 600;
+  border-radius: 8px;
+  background: #0078D4;
+  color: white;
+  border: none;
+  cursor: pointer;
+  transition: all 0.3s ease-in-out;
+}
+
+.btn-login:hover {
+  background: #005A9E;
+}
