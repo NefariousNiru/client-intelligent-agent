@@ -40,7 +40,7 @@ export class LoginComponent implements AfterViewInit {
         "Plan &amp; automate meetings seamlessly with Planner."
       ],
       typeSpeed: 40,
-      backSpeed: 20,
+      backSpeed: 10,
       backDelay: 2000,
       loop: true
     });
@@ -64,8 +64,8 @@ export class LoginComponent implements AfterViewInit {
 
     const iconImages: HTMLImageElement[] = [];
     let positions: number[] = [];
-    const iconSize = 50; // Size of each icon
-    const spacing = 80; // Spacing between icons
+    let iconSize = 60; // Size of each icon
+    let spacing = 80; // Spacing between icons
     const speed = 0.8; // Movement speed
 
     // Load all icons
@@ -83,17 +83,21 @@ export class LoginComponent implements AfterViewInit {
       requestAnimationFrame(animate);
       ctx!.clearRect(0, 0, canvas.width, canvas.height);
 
-      // **Loop through icons and animate them**
       for (let i = 0; i < iconImages.length * 2; i++) {
-        let realIndex = i % icons.length; // Get the actual index for images
+        let realIndex = i % icons.length;
         if (iconImages[realIndex]) {
-          ctx!.drawImage(iconImages[realIndex], positions[i], canvas.height / 2 - iconSize / 2, iconSize, iconSize);
+          ctx!.drawImage(
+            iconImages[realIndex],
+            positions[i],
+            canvas.height / 2 - iconSize / 2,
+            iconSize,
+            iconSize
+          );
           positions[i] -= speed;
 
-          // **If an icon fully moves out of view, reposition it at the end**
           if (positions[i] < -iconSize) {
-            let lastPos = Math.max(...positions); // Find the rightmost position
-            positions[i] = lastPos + iconSize + spacing; // Move it to the rightmost
+            let lastPos = Math.max(...positions);
+            positions[i] = lastPos + iconSize + spacing;
           }
         }
       }
@@ -101,9 +105,15 @@ export class LoginComponent implements AfterViewInit {
 
     // Adjust canvas size dynamically
     function resizeCanvas() {
-      canvas.width = window.innerWidth * 0.5; // Takes 60% of the width
-      canvas.height = 80; // Fixed height for the strip
+      const screenWidth = window.innerWidth;
+      canvas.width = screenWidth > 600 ? screenWidth * 0.5 : screenWidth * 0.8; // Adjust width for mobile
+      canvas.height = screenWidth > 600 ? 80 : 60; // Reduce height on smaller screens
+
+      // **Adjust icon size dynamically**
+      iconSize = screenWidth > 600 ? 60 : 35; // Reduce icon size on smaller screens
+      spacing = screenWidth > 600 ? 80 : 35; // Reduce spacing on smaller screens
     }
+
 
     window.addEventListener('resize', resizeCanvas);
     resizeCanvas();
