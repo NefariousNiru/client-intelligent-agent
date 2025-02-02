@@ -1,21 +1,30 @@
 <div class="login-container">
-  <!-- Three.js Animated Background -->
-  <canvas id="animationCanvas"></canvas>
+  <!-- Left Side: Generative Text + Ball Animations -->
+  <div class="left-side">
 
-  <!-- Glassmorphic Login Card -->
-  <div class="login-card shadow">
-    <div class="login-header">
-      <img src="assets/microsoft-logo.svg" alt="Microsoft Logo" class="logo">
-      <h3>Hi there!</h3>
-      <p class="text-muted">Sign in to continue</p>
+    <div class="typing-container">
+      <span id="typed-output"></span>
     </div>
+    <canvas id="animationCanvas"></canvas>
+  </div>
 
-    <button class="btn-login" (click)="loginWithMicrosoft()">
-      <i class="bi bi-microsoft"></i> &nbsp;Continue with Microsoft
-    </button>
+  <!-- Right Side: Elegant Glassmorphic Login -->
+  <div class="right-side">
+    <div class="login-card">
+      <div class="card-header">
+        <img src="assets/microsoft-logo.svg" alt="Microsoft Logo" class="logo">
+      </div>
+
+      <div class="card-body">
+        <h2>Sign in to IntelliPM</h2>
+        <p class="text-muted">Your AI-powered Project Assistant.</p>
+      </div>
+
+      <div class="login-actions">
+        <button class="btn-login" (click)="loginWithMicrosoft()">
+          <i class="bi bi-microsoft"></i> &nbsp;Continue with Microsoft
+        </button>
+      </div>
+    </div>
   </div>
 </div>
-
-
-
-

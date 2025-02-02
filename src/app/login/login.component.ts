@@ -1,4 +1,5 @@
 import { Component, AfterViewInit } from '@angular/core';
+import Typed from 'typed.js';
 import * as THREE from 'three';
 
 @Component({
@@ -23,80 +24,88 @@ export class LoginComponent implements AfterViewInit {
   }
 
   ngAfterViewInit() {
-    this.initBackgroundAnimation();
+    this.initTypingAnimation();
+    this.initIconStrip();
   }
 
-  private initBackgroundAnimation() {
+  private initTypingAnimation() {
+    new Typed("#typed-output", {
+      strings: [
+        "🥇 Seamless Teams collaboration!",
+        "📅 Effortless meeting scheduling.",
+        "✅ Smart task planning with Planner.",
+        "⏳ OneDrive keeps everything synced.",
+        "🚀 SharePoint for easy document access."
+      ],
+      typeSpeed: 50,
+      backSpeed: 25,
+      backDelay: 2000,
+      loop: true
+    });
+  }
+
+  private initIconStrip() {
     const canvas = document.getElementById('animationCanvas') as HTMLCanvasElement;
-    const scene = new THREE.Scene();
-    const camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 1000);
-    const renderer = new THREE.WebGLRenderer({ canvas, alpha: true });
+    const ctx = canvas.getContext('2d');
 
-    renderer.setSize(window.innerWidth, window.innerHeight);
-    document.body.appendChild(renderer.domElement);
+    if (!ctx) return;
 
-    // Soft Ambient Lighting
-    const light = new THREE.AmbientLight(0xffffff, 0.4);
-    scene.add(light);
-    const directionalLight = new THREE.DirectionalLight(0xffffff, 0.8);
-    directionalLight.position.set(5, 10, 5);
-    scene.add(directionalLight);
+    const icons = [
+      "assets/outlook.svg",
+      "assets/teams.svg",
+      "assets/planner.svg",
+      "assets/onedrive.svg",
+      "assets/365.svg",
+      "assets/todo.svg",
+      "assets/sharepoint.svg",
+    ];
 
-    // Array to store objects
-    const objects: THREE.Mesh[] = [];
+    const iconImages: HTMLImageElement[] = [];
+    let positions: number[] = [];
+    const iconSize = 50; // Size of each icon
+    const spacing = 80; // Spacing between icons
+    const speed = 0.8; // Movement speed
 
-    // Glassy Cube Geometry
-    const cubeGeometry = new THREE.BoxGeometry(0.6, 0.6, 0.6);
-    const cubeMaterial = new THREE.MeshStandardMaterial({
-      color: 0x0078D4,
-      transparent: true,
-      opacity: 0.4,
-      roughness: 0.1,
-      metalness: 0.6
+    // Load all icons
+    icons.forEach((src, index) => {
+      const img = new Image();
+      img.src = src;
+      img.onload = () => {
+        iconImages[index] = img;
+        positions[index] = index * (iconSize + spacing);
+        positions[index + icons.length] = positions[index] + (icons.length * (iconSize + spacing)); // Duplicate set
+      };
     });
 
-    // Floating Tetrahedrons
-    const tetraGeometry = new THREE.TetrahedronGeometry(0.5);
-    const tetraMaterial = new THREE.MeshStandardMaterial({
-      color: 0x00A4EF,
-      transparent: true,
-      opacity: 0.4,
-      roughness: 0.2,
-      metalness: 0.6
-    });
-
-    // Create Multiple Shapes
-    for (let i = 0; i < 15; i++) {
-      const object = Math.random() > 0.5
-        ? new THREE.Mesh(cubeGeometry, cubeMaterial)
-        : new THREE.Mesh(tetraGeometry, tetraMaterial);
-
-      object.position.set(
-        (Math.random() - 0.5) * 8,
-        (Math.random() - 0.5) * 8,
-        (Math.random() - 0.5) * 8
-      );
-
-      object.rotation.set(Math.random() * Math.PI, Math.random() * Math.PI, Math.random() * Math.PI);
-      scene.add(object);
-      objects.push(object);
-    }
-
-    camera.position.z = 5;
-
-    // Animation loop
     function animate() {
       requestAnimationFrame(animate);
+      ctx!.clearRect(0, 0, canvas.width, canvas.height);
 
-      objects.forEach((obj, i) => {
-        obj.rotation.x += 0.005;
-        obj.rotation.y += 0.005;
-        obj.position.y += Math.sin(Date.now() * 0.0005 + i) * 0.002;
-      });
+      // **Loop through icons and animate them**
+      for (let i = 0; i < iconImages.length * 2; i++) {
+        let realIndex = i % icons.length; // Get the actual index for images
+        if (iconImages[realIndex]) {
+          ctx!.drawImage(iconImages[realIndex], positions[i], canvas.height / 2 - iconSize / 2, iconSize, iconSize);
+          positions[i] -= speed;
 
-      renderer.render(scene, camera);
+          // **If an icon fully moves out of view, reposition it at the end**
+          if (positions[i] < -iconSize) {
+            let lastPos = Math.max(...positions); // Find the rightmost position
+            positions[i] = lastPos + iconSize + spacing; // Move it to the rightmost
+          }
+        }
+      }
     }
 
+    // Adjust canvas size dynamically
+    function resizeCanvas() {
+      canvas.width = window.innerWidth * 0.5; // Takes 60% of the width
+      canvas.height = 80; // Fixed height for the strip
+    }
+
+    window.addEventListener('resize', resizeCanvas);
+    resizeCanvas();
     animate();
   }
+
 }

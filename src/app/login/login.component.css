@@ -1,59 +1,158 @@
-/* Fullscreen Animated Background */
+/* Fullscreen Split Layout */
 .login-container {
-  position: relative;
+  display: flex;
   height: 100vh;
   width: 100%;
+  background: linear-gradient(to right, #FAF3F5, #E3ECF5);
+  overflow: hidden;
+  flex-wrap: wrap; /* Ensures stacking on smaller screens */
+}
+
+/* Left Side: AI Generative Text & Animations */
+.left-side {
+  flex: 1.5;
+  position: relative;
   display: flex;
   justify-content: center;
   align-items: center;
-  background: linear-gradient(to right, #f4f7f9, #d9e2ec);
   overflow: hidden;
+  background: linear-gradient(to right, #FAF3F5, #E3ECF5);
+  min-width: 50%; /* Ensures it doesn't shrink too much */
 }
 
-/* Animated Background */
+/* Make Canvas Responsive */
 canvas {
   position: absolute;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  z-index: 0;
+  top: 60%;  /* Right below the typing text */
+  height: 80px;
+  z-index: 1; /* Above background but below text */
+  pointer-events: none; /* No interference with interactions */
 }
 
-/* Glassmorphic Login Card */
-.login-card {
-  position: relative;
-  z-index: 1;
-  background: rgba(94, 94, 94, 0.205);
-  border-radius: 15px;
-  backdrop-filter: blur(12px);
-  padding: 40px;
-  width: 400px;
+/* **Ensure the Text Appears Above the Animation** */
+.typing-container {
+  font-size: clamp(22px, 2vw, 32px); /* Responsive font size */
+  font-weight: 500;
+  color: #4A6583;
+  z-index: 2; /* Ensures text is on top */
   text-align: center;
-  box-shadow: 0 6px 20px rgba(0, 0, 0, 0.15);
-  color: #2c3e50;
+  width: 60%;
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  padding: 20px;
+}
+
+/* Right Side: Glassmorphic Elegant Login */
+.right-side {
+  flex: 0.7;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background: rgba(255, 255, 255, 0.85);
+  backdrop-filter: blur(20px);
+  min-width: 40%;
+  padding: 20px;
+}
+
+/* Glassmorphic Card */
+.login-card {
+  width: 90%;
+  max-width: 420px;
+  padding: clamp(30px, 5vw, 45px); /* Adaptive padding */
+  text-align: center;
+  background: linear-gradient(to right, #FBEAEC, #DCE6F2);
+  backdrop-filter: blur(25px);
+  border-radius: 18px;
+  box-shadow: 0px 15px 50px rgba(0, 0, 0, 0.2);
+  transition: transform 0.3s ease-in-out, box-shadow 0.3s ease-in-out;
+  position: relative;
+}
+
+.login-card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0px 15px 55px rgba(0, 0, 0, 0.3);
 }
 
 /* Microsoft Logo */
 .logo {
-  width: 100px;
-  margin-bottom: 10px;
+  width: clamp(60px, 6vw, 85px); /* Responsive scaling */
+  margin-bottom: 15px;
 }
 
-/* Professional Login Button */
+/* Text & Titles */
+.card-body h2 {
+  font-size: clamp(20px, 3vw, 24px);
+  font-weight: 600;
+  color: #2C3E50;
+  margin-bottom: 8px;
+}
+
+.card-body p {
+  font-size: clamp(14px, 2vw, 16px);
+  color: #4A6583;
+}
+
+/* Responsive Button */
 .btn-login {
   width: 100%;
-  padding: 12px;
-  font-size: 16px;
+  padding: clamp(12px, 3vw, 14px);
+  font-size: clamp(14px, 2vw, 16px);
   font-weight: 600;
-  border-radius: 8px;
-  background: #0078D4;
+  border-radius: 12px;
+  background: linear-gradient(135deg, #0078D4, #005A9E);
   color: white;
   border: none;
   cursor: pointer;
-  transition: all 0.3s ease-in-out;
+  box-shadow: 0px 4px 10px rgba(0, 120, 212, 0.3);
+  transition: all 0.3s ease-in-out, box-shadow 0.3s ease-in-out;
 }
 
 .btn-login:hover {
-  background: #005A9E;
+  background: linear-gradient(135deg, #005A9E, #004B7D);
+  transform: translateY(-3px);
+  box-shadow: 0px 6px 15px rgba(0, 120, 212, 0.4);
+}
+
+/* ---- 📱 Mobile & Tablet Optimization ---- */
+@media (max-width: 1024px) {
+  .login-container {
+    flex-direction: column; /* Stack on smaller screens */
+  }
+
+  .left-side, .right-side {
+    flex: 1;
+    min-width: 100%;
+  }
+
+  .typing-container {
+    font-size: clamp(16px, 3vw, 24px);
+    padding: 10px;
+  }
+
+  .login-card {
+    width: 95%;
+    max-width: 380px;
+    padding: 30px;
+  }
+
+  .btn-login {
+    font-size: 14px;
+    padding: 12px;
+  }
+}
+
+@media (max-width: 600px) {
+  .typing-container {
+    font-size: clamp(14px, 4vw, 20px);
+    width: 90%;
+  }
+
+  .login-card {
+    padding: 25px;
+  }
+
+  .btn-login {
+    padding: 10px;
+  }
 }
