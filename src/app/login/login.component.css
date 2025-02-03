@@ -29,6 +29,8 @@ canvas {
   height: auto;
   z-index: 1;
   pointer-events: none;
+  image-rendering: -webkit-optimize-contrast;
+  image-rendering: crisp-edges;
 }
 
 /* Mobile Optimization */

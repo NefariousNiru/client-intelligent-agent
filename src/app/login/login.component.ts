@@ -71,6 +71,7 @@ export class LoginComponent implements AfterViewInit {
     // Load all icons
     icons.forEach((src, index) => {
       const img = new Image();
+      img.style.imageRendering = 'crisp-edges';
       img.src = src;
       img.onload = () => {
         iconImages[index] = img;
@@ -82,6 +83,10 @@ export class LoginComponent implements AfterViewInit {
     function animate() {
       requestAnimationFrame(animate);
       ctx!.clearRect(0, 0, canvas.width, canvas.height);
+
+      ctx!.imageSmoothingEnabled = true;
+      ctx!.imageSmoothingQuality = 'high';
+
 
       for (let i = 0; i < iconImages.length * 2; i++) {
         let realIndex = i % icons.length;
