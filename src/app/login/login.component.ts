@@ -1,6 +1,9 @@
 import { Component, AfterViewInit } from '@angular/core';
 import Typed from 'typed.js';
-import * as THREE from 'three';
+import { URLs } from '../configs/urls';
+import { HttpClient } from '@angular/common/http';
+import { AuthService } from '../service/auth.service';
+
 
 @Component({
   selector: 'app-login',
@@ -9,18 +12,10 @@ import * as THREE from 'three';
 })
 export class LoginComponent implements AfterViewInit {
 
-  private clientId = 'YOUR_AZURE_CLIENT_ID';
-  private tenantId = 'common';
-  private redirectUri = 'http://localhost:8000/auth/callback';
+  constructor(private authService: AuthService) {}
 
   loginWithMicrosoft() {
-    const authUrl = `https://login.microsoftonline.com/${this.tenantId}/oauth2/v2.0/authorize?
-      client_id=${this.clientId}
-      &response_type=code
-      &redirect_uri=${encodeURIComponent(this.redirectUri)}
-      &scope=Mail.Read Calendars.Read OnlineMeetings.Read User.Read
-      &response_mode=query`;
-    window.location.href = authUrl;
+    this.authService.loginWithMicrosoft();
   }
 
   ngAfterViewInit() {
